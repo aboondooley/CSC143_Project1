@@ -17,7 +17,6 @@ public class Supermarket extends Store {
         ArrayList<Pair<String, Integer>> productList = new ArrayList<>();
         // Create a set with all the keys in supplies so we can iterate over
         // keySet() is iterable
-        Set<String> keys = this.supplies.keySet();
         for (String key : this.supplies.keySet()) {
             // Build new pair, append that pair that matches the pair from the supplies
             productList.add(new Pair<>(key, this.supplies.get(key)));
