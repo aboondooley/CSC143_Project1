@@ -30,19 +30,20 @@ public class Restaraunt extends Store {
        for(String r : this.recipes.keySet()){
            // In each recipe, loop through each ingredient
            // Save a counter for the lowest denominator
+           // Collections with an S!!
+
+           int totalAmount = Collections.max(this.supplies.values());
            for (Pair<String, Integer> i : recipes.get(r)){
-               int amount = 0;
+               int currentAmount = this.supplies.get(i.left);
                // Need to see how many servings can be made of each ingredient in the supply room
                //Pair<String, Integer> currentRecipe = new Pair<String, Integer>(r, this.recipes.get(i));
-               int quantity = i.right/ this.supplies.get(i.left);
+               int quantity = this.supplies.get(i.left) / i.right;
                //Integer inventory = Integer.valueOf(this.supplies.get(i.left));
-               if (quantity < amount){
-                   amount = quantity;
+               if (quantity < totalAmount){
+                   totalAmount = quantity;
                }
-               //Integer necessary = Integer.valueOf(this.recipes.get(i.left));
            }
-// QUESTION HERE
-           recipeInventory.add(new Pair<>(r, amount));
+           recipeInventory.add(new Pair<String, Integer>(r, totalAmount));
        }
         return recipeInventory;
 
@@ -53,4 +54,5 @@ public class Restaraunt extends Store {
     }
 
     /* YOUR CODE HERE */
+
 }
