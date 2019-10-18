@@ -1,6 +1,7 @@
 package world;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -15,7 +16,7 @@ public class Hotel extends Building implements Residential, Rentable, Business {
         Check out the docs here:
         https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/HashSet.html
      */
-    HashSet<String> rentals = new HashSet<String>();
+    HashSet<String> rentals = new HashSet<>();
     HashSet<String> occupants = new HashSet<>();
 
     public Hotel(String location, String company) {
@@ -59,6 +60,9 @@ public class Hotel extends Building implements Residential, Rentable, Business {
 
     @Override
     public Collection<String> getOccupants() {
+        if (this.occupants.size()<=1) {
+            return new ArrayList<String>(occupants);
+        }
         return this.occupants;
     }
 
