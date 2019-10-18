@@ -2,7 +2,13 @@ package world;
 
 import lib.Pair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+
+import static java.util.Collections.min;
+//import static java.util.Collections;
 
 public class Restaraunt extends Store {
     public HashMap<String, Collection<Pair<String, Integer>>> recipes = new HashMap<>();
@@ -19,7 +25,21 @@ public class Restaraunt extends Store {
     }
     @Override
     public Collection<Pair<String, Integer>> purchase(Collection<Pair<String, Integer>> order) {
-        return null;
+       ArrayList<Pair<String, Integer>> returnOrder = new ArrayList<>();
+        // for each recipe in the order. burger(String), 5 (int)
+       for (Pair<String, Integer> p : order) {
+           Collection<Pair<String, Integer>> currentStock = this.getProducts();
+           // Fill is the number of orders we need to fill
+           int fill = min(currentStock.get(p.left), p.right);
+           // For each ingredient, multiply fill by the number needed in the recipe,
+           // then subtract this number from the number in supply
+           for (Pair<String, Integer> i : recipes.get(p.right)) {
+                   returnOrder.add(new Pair<>(p.left, fill));
+                       this.supplies.put(i.left, i.right-(i.right*fill));
+           }
+       }
+
+        return returnOrder;
     }
 
     @Override
@@ -32,7 +52,7 @@ public class Restaraunt extends Store {
            // Save a counter for the lowest denominator
            // Collections with an S!!
 
-           int totalAmount = Collections.max(this.supplies.values());
+           int totalAmount = max(this.supplies.values());
            for (Pair<String, Integer> i : recipes.get(r)){
                int currentAmount = this.supplies.get(i.left);
                // Need to see how many servings can be made of each ingredient in the supply room
