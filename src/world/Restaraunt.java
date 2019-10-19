@@ -22,9 +22,10 @@ public class Restaraunt extends Store {
         // Create list of purchased food to return
        ArrayList<Pair<String, Integer>> returnOrder = new ArrayList<>();
        for (Pair<String, Integer> o : order) {
-           // For each recipe in the order, call getProducts.
+           // For each recipe in the order, call getProducts, this will be updated to reflect the last ordered fulfilled.
            Collection<Pair<String, Integer>> currentStock = this.getProducts();
            int stockNum = 0;
+           // Iterates through the recipes in getProducts to find the current recipe and returns the number that can be fulfilled
             for (Pair<String, Integer> c : currentStock){
                 if (c.left == o.left){stockNum = c.right;}
             }
@@ -35,7 +36,6 @@ public class Restaraunt extends Store {
                returnOrder.add(new Pair<>(o.left, fill));
                 for (Pair<String, Integer> i : recipes.get(o.left)) {
                // Then multiply fill by the number needed in the recipe and subtract from the number in supply
-                    System.out.println(i.left + " " + this.supplies.get(i.left) + " " + i.left + " " +fill);
                     this.supplies.put(i.left, this.supplies.get(i.left) - (i.right * fill));
                 }
            }
@@ -51,14 +51,18 @@ public class Restaraunt extends Store {
            // In each recipe, loop through each ingredient
            // Save a counter for the lowest denominator, start it at the highest value of ingredients
            int totalAmount = max(this.supplies.values());
-           for (Pair<String, Integer> i : recipes.get(r)){
-               //int currentAmount = this.supplies.get(i.left);
+           for (Pair<String, Integer> i : recipes.get(r)) {
                // Need to see how many servings can be made of each ingredient in the supply room
-               int quantity = this.supplies.get(i.left) / i.right;
-               if (quantity < totalAmount){
-                   // If the counter is bigger than the current number, update counter
-                   totalAmount = quantity;
+               //System.out.println(this.supplies.get(i.left));
+               // Need to set amount to zero if the ingredient does not exist in this.supplies
+               int quantity = 0;
+               if (this.supplies.containsKey(i.left)) {
+                   quantity = this.supplies.get(i.left) / i.right;
                }
+                   if (quantity < totalAmount) {
+                       // If the counter is bigger than the current number, update counter
+                       totalAmount = quantity;
+                   }
            }
            // Add the recipe and the number that can be made to the return list
            recipeInventory.add(new Pair<String, Integer>(r, totalAmount));
