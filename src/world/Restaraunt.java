@@ -2,14 +2,13 @@ package world;
 
 import lib.Pair;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-
 import static java.util.Collections.max;
-import static java.util.Collections.min;
-import static java.util.Collections.singleton;
+import static java.lang.Math.min;
+
 
 
 public class Restaraunt extends Store {
@@ -20,20 +19,27 @@ public class Restaraunt extends Store {
 
     @Override
     public Collection<Pair<String, Integer>> purchase(Collection<Pair<String, Integer>> order) {
+        // Create list of purchased food to return
        ArrayList<Pair<String, Integer>> returnOrder = new ArrayList<>();
-       for (Pair<String, Integer> p : order) {
+       for (Pair<String, Integer> o : order) {
+           // For each recipe in the order, call getProducts.
            Collection<Pair<String, Integer>> currentStock = this.getProducts();
-           //int fill = 0;
+           int stockNum = 0;
+            for (Pair<String, Integer> c : currentStock){
+                if (c.left == o.left){stockNum = c.right;}
+            }
            // Fill is the number of orders we can fill
-           int fill = min(currentStock.get(p.left), p.right);
-           for (Pair<String, Integer> i : recipes.get(p.right)) {
-               // Return the number of we can fill in our return list
-                   returnOrder.add(new Pair<>(p.left, fill));
+           int fill = min(stockNum, o.right);
+            // Return the number of we can fill in our return list if the order can be filled
+           if (fill > 0){
+               returnOrder.add(new Pair<>(o.left, fill));
+                for (Pair<String, Integer> i : recipes.get(o.left)) {
                // Then multiply fill by the number needed in the recipe and subtract from the number in supply
-                       this.supplies.put(i.left, i.right-(i.right*fill));
+                    System.out.println(i.left + " " + this.supplies.get(i.left) + " " + i.left + " " +fill);
+                    this.supplies.put(i.left, this.supplies.get(i.left) - (i.right * fill));
+                }
            }
        }
-
         return returnOrder;
     }
 
