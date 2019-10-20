@@ -47,25 +47,27 @@ public class Restaraunt extends Store {
     public Collection<Pair<String, Integer>> getProducts() {
         // Keeps a list of how many servings of each recipe can be made
         ArrayList<Pair<String, Integer>> recipeInventory = new ArrayList<>();
-       for(String r : this.recipes.keySet()){
-           // In each recipe, loop through each ingredient
-           // Save a counter for the lowest denominator, start it at the highest value of ingredients
-           int totalAmount = max(this.supplies.values());
-           for (Pair<String, Integer> i : recipes.get(r)) {
-               // Need to see how many servings can be made of each ingredient in the supply room
-               //System.out.println(this.supplies.get(i.left));
-               // Need to set amount to zero if the ingredient does not exist in this.supplies
-               int quantity = 0;
-               if (this.supplies.containsKey(i.left)) {
-                   quantity = this.supplies.get(i.left) / i.right;
-               }
-                   if (quantity < totalAmount) {
-                       // If the counter is bigger than the current number, update counter
-                       totalAmount = quantity;
-                   }
-           }
-           // Add the recipe and the number that can be made to the return list
-           recipeInventory.add(new Pair<String, Integer>(r, totalAmount));
+        //Check through ingredients of the recipes, if supplies is not empty
+        if (supplies.size()>0){
+            for(String r : this.recipes.keySet()) {
+                // In each recipe, loop through each ingredient
+                // Save a counter for the lowest denominator, start it at the highest value of ingredients
+                int totalAmount = max(this.supplies.values());
+                for (Pair<String, Integer> i : recipes.get(r)) {
+                    // Need to see how many servings can be made of each ingredient in the supply room
+                    // Need to set amount to zero if the ingredient does not exist in this.supplies
+                    int quantity = 0;
+                    if (this.supplies.containsKey(i.left)) {
+                        quantity = this.supplies.get(i.left) / i.right;
+                    }
+                    if (quantity < totalAmount) {
+                        // If the counter is bigger than the current number, update counter
+                        totalAmount = quantity;
+                    }
+                }
+                // Add the recipe and the number that can be made to the return list
+                recipeInventory.add(new Pair<String, Integer>(r, totalAmount));
+            }
        }
         return recipeInventory;
     }
