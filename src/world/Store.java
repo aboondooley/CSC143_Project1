@@ -47,7 +47,6 @@ public abstract class Store extends Building implements Business {
                 supplies.put(p.left, supplies.get(p.left) + p.right);
                 continue;
             }
-
             supplies.put(p.left, p.right);
         }
     }

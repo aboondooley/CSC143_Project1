@@ -60,10 +60,7 @@ public class Hotel extends Building implements Residential, Rentable, Business {
 
     @Override
     public Collection<String> getOccupants() {
-        if (this.occupants.size()<=1) {
             return new ArrayList<String>(occupants);
-        }
-        return this.occupants;
     }
 
 }
