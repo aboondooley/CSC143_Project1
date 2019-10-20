@@ -58,6 +58,8 @@ public class Restaraunt extends Store {
                     // Need to set amount to zero if the ingredient does not exist in this.supplies
                     int quantity = 0;
                     if (this.supplies.containsKey(i.left)) {
+                        // Divide the amount in supplies by the number needed in the recipe
+                        // Gives the number that can be created
                         quantity = this.supplies.get(i.left) / i.right;
                     }
                     if (quantity < totalAmount) {
