@@ -154,12 +154,28 @@ public class WorldRunner {
         Collection<Pair<String, Integer>> dinner = new ArrayList<>(rositas.purchase(Arrays.asList(
                 new Pair<>("chips and guac", 1),
                 new Pair<>("margarita", 2),
-                new Pair<>("fajitas", 2),
+                new Pair<>("chicken fajitas", 2),
                 new Pair<>("flan", 1))));
         // 5.
         // Supply chain from the Supermarket to the Restaraunt
-        // I will have to finish this later!
-
+        // First, supply the  supermarket with the ingredients for the recipes
+        for (int i = 0; i < 3; ++i){
+            costco.supply(appIngredients);
+            costco.supply(mainIngredients);
+            costco.supply(drinkIngredients);
+            costco.supply(dessertIngredients);
+        }
+        // Now we create an order for the Restauarant to buy
+        Collection<Pair<String, Integer>> order = new ArrayList<>();
+        order.addAll(appIngredients);
+        order.addAll(drinkIngredients);
+        order.addAll(mainIngredients);
+        order.addAll(dessertIngredients);
+        order.addAll(mainIngredients);
+        order.addAll(dessertIngredients);
+        order.addAll(appIngredients);
+// Now supply the restauarant with the igredients!
+rositas.supply(order);
 
 
 
