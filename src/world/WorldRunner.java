@@ -146,8 +146,7 @@ public class WorldRunner {
         // Buy some groceries
         Collection<Pair<String, Integer>> groceries = new ArrayList<>(costco.purchase(Arrays.asList(
                 new Pair<>("cereal", 1),
-                new Pair<>("cake", 3)
-        )));
+                new Pair<>("cake", 3))));
         // Go on a trip, get a hotel
         marriot.registerRental("Alie");
         marriot.moveIn("Alie");
@@ -159,7 +158,7 @@ public class WorldRunner {
                 new Pair<>("flan", 1))));
         // 5.
         // Supply chain from the Supermarket to the Restaraunt
-
+        // I will have to finish this later!
 
 
 
